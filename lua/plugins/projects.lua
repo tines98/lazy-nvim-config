@@ -49,12 +49,20 @@ return {
                     file:close()
                 end
 
+                -- Define once, e.g. in a config or at start of the key handler
+                vim.api.nvim_set_hl(0, "OrgPersonal", { fg = "#a970c7" })
+                vim.api.nvim_set_hl(0, "OrgBekk",     { fg = "#C93D36" })
+                vim.api.nvim_set_hl(0, "OrgAutopay",  { fg = "#FF9E75" })
+                vim.api.nvim_set_hl(0, "OrgNationaltheatret", { fg = "#C1D9BB" })
+                vim.api.nvim_set_hl(0, "OrgDefault",  { fg = "white" })
+
                 local org_colors = {
                     -- Add your actual org names here with colors
-                    ["personal"] = "Function", -- purple
-                    ["bekk"] = "String",       -- blue
-                    ["autopay"] = "Keyword",   -- red
-                    default = "Comment",       -- gray
+                    ["personal"] = "OrgPersonal", -- purple
+                    ["bekk"] = "OrgBekk",       -- blue
+                    ["autopay"] = "OrgAutopay",   -- orange
+                    ["nationaltheatret"] = "OrgNationaltheatret", -- lilac
+                    default = "OrgDefault",       -- gray
                 }
 
                 local pickers = require("telescope.pickers")
