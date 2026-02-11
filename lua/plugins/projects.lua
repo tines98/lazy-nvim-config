@@ -51,9 +51,9 @@ return {
 
                 local org_colors = {
                     -- Add your actual org names here with colors
-                    ["personal"] = "Function", -- blue
-                    ["bekk"] = "String",       -- green
-                    ["autopay"] = "Keyword",   -- purple
+                    ["personal"] = "Function", -- purple
+                    ["bekk"] = "String",       -- blue
+                    ["autopay"] = "Keyword",   -- red
                     default = "Comment",       -- gray
                 }
 
@@ -86,11 +86,11 @@ return {
                             -- Replace dashes with spaces
 
                             local org_mapper = {
-                                ["autopay"]          = "🚘 Autopay",
-                                ["personal"]         = "⭐ Personal",
-                                ["bekk"]             = "💼 Bekk",
-                                ["nationaltheatret"] = "🎭 NT",
-                                default              = "❓ UNKNOWN",
+                                ["autopay"]          = "\u{f1b9} Autopay",
+                                ["personal"]         = "\u{f415} Personal",
+                                ["bekk"]             = "\u{f491} Bekk",
+                                ["nationaltheatret"] = "\u{eeb6} NT",
+                                default              = "\u{f128} UNKNOWN",
                             }
 
                             local org_display = org_mapper[org] or org_mapper.default
