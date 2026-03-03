@@ -1,5 +1,6 @@
 return {
   "ahmedkhalf/project.nvim",
+  lazy = false,
   dependencies = { "nvim-telescope/telescope.nvim" },
   config = function()
     require("project_nvim").setup({
@@ -10,6 +11,8 @@ return {
       silent_chdir = true,
       datapath = vim.fn.stdpath("data"),
     })
+
+    require("telescope").load_extension("projects")
   end,
   keys = {
     {

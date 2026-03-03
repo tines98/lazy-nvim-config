@@ -1,6 +1,9 @@
 return {
   "folke/snacks.nvim",
   opts = {
+    explorer = {
+      hidden = true,
+    },
     dashboard = {
       preset = {
         pick = "telescope.nvim",
@@ -50,6 +53,18 @@ return {
  ██      ██  ██  ▄ ▀█▄▄ ██            ███     ██   ██ ██ ██      ██    ██    ██       ███ ███    
 ▄██▄     ▀█▄▄▀█▄ █▀▄▄█▀  ▀█▄▄▄▀        █     ▄██▄ ▄██ ██ ██▄    ▄██▄▄▄█▀    ▄██▄       █   █     
           ]],
+      },
+      sections = {
+        { section = "header" },
+        {
+          section = "terminal",
+          align = "center",
+          cmd = 'bash -c \'printf "%*s\n" $(( ($(tput cols) + 5) / 2 )) "$(date +"%H:%M")"; printf "%*s\n" $(( ($(tput cols) + 16) / 2 )) "$(date +"%A %d. %B %Y")"\'',
+          height = 4,
+          gap = 1,
+        },
+        { section = "keys", gap = 1, padding = 1 },
+        { section = "startup" },
       },
     },
   },
