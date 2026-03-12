@@ -2,7 +2,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "everforest", -- or "kanagawa-wave", "everforest", etc.
+      colorscheme = "gruvbox-material", -- or "kanagawa-wave", "everforest", etc.
     },
   },
 }

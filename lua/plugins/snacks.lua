@@ -1,6 +1,7 @@
 return {
   "folke/snacks.nvim",
   opts = {
+    lazygit = {},
     explorer = {
       hidden = true,
     },
