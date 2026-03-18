@@ -24,7 +24,12 @@ return {
 
         vim.fn.mkdir(vim.fn.stdpath("data") .. "/project_nvim", "p")
 
-        local handle = io.popen("find " .. dev_dir .. " -maxdepth 3 -type d -name '.git' 2>/dev/null")
+        local handle = io.popen(
+          "find "
+            .. dev_dir
+            .. " -maxdepth 3 -type d -name '.git' 2>/dev/null;"
+            .. "find ~/.config -maxdepth 3 -type d -name '.git' 2>/dev/null"
+        )
         local projects = {}
 
         if handle then
@@ -60,15 +65,17 @@ return {
         vim.api.nvim_set_hl(0, "OrgBekk", { fg = "#C93D36" })
         vim.api.nvim_set_hl(0, "OrgAutopay", { fg = "#FF9E75" })
         vim.api.nvim_set_hl(0, "OrgNationaltheatret", { fg = "#C1D9BB" })
+        vim.api.nvim_set_hl(0, "OrgConfig", { fg = "#54A23D" })
         vim.api.nvim_set_hl(0, "OrgDefault", { fg = "white" })
 
         local org_colors = {
           -- Add your actual org names here with colors
-          ["personal"] = "OrgPersonal", -- purple
-          ["bekk"] = "OrgBekk", -- blue
-          ["autopay"] = "OrgAutopay", -- orange
-          ["nationaltheatret"] = "OrgNationaltheatret", -- lilac
-          default = "OrgDefault", -- gray
+          ["personal"] = "OrgPersonal",
+          ["bekk"] = "OrgBekk",
+          ["autopay"] = "OrgAutopay",
+          ["nationaltheatret"] = "OrgNationaltheatret",
+          [".config"] = "OrgConfig",
+          default = "OrgDefault",
         }
 
         local pickers = require("telescope.pickers")
@@ -105,6 +112,7 @@ return {
                   ["personal"] = "\u{f415} Personal",
                   ["bekk"] = "\u{f491} Bekk",
                   ["nationaltheatret"] = "\u{eeb6} NT",
+                  [".config"] = "\u{e615} Config",
                   default = "\u{f128} UNKNOWN",
                 }
 
