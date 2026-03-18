@@ -23,3 +23,44 @@ vim.api.nvim_create_autocmd({ "DirChanged", "BufEnter" }, {
     vim.opt.title = true
   end,
 })
+vim.api.nvim_create_autocmd("DirChanged", {
+  pattern = "global",
+  callback = function()
+    -- Search upward from cwd for .iterm-color
+    local color_file = vim.fn.findfile(".iterm-color", ".;")
+
+    if color_file == "" then
+      -- Reset to default tab color
+      io.write("\x1b]6;1;bg;*;default\a")
+      io.flush()
+      return
+    end
+
+    local f = io.open(color_file, "r")
+    if not f then
+      return
+    end
+
+    local hex = f:read("*l"):gsub("^#", ""):gsub("%s+", "")
+    f:close()
+
+    if #hex ~= 6 then
+      return
+    end
+
+    -- Convert hex to r/g/b components in 0-65535 range (iTerm2 uses 16-bit)
+    local r = tonumber(hex:sub(1, 2), 16)
+    local g = tonumber(hex:sub(3, 4), 16)
+    local b = tonumber(hex:sub(5, 6), 16)
+
+    -- Send iTerm2 proprietary escape sequence to set tab color
+    local seq = string.format(
+      "\x1b]6;1;bg;red;brightness;%d\a" .. "\x1b]6;1;bg;green;brightness;%d\a" .. "\x1b]6;1;bg;blue;brightness;%d\a",
+      r,
+      g,
+      b
+    )
+    io.write(seq)
+    io.flush()
+  end,
+})
