@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd({ "DirChanged", "BufEnter" }, {
   callback = function()
     local project = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
     local file = vim.fn.expand("%:t")
-    vim.opt.titlestring = project .. (file ~= "" and " • " .. file or "") .. " – nvim"
+    vim.opt.titlestring = "<b>" .. project .. "</b> |" .. (file ~= "" and " • " .. file or "")
     vim.opt.title = true
   end,
 })
