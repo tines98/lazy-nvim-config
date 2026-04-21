@@ -13,3 +13,19 @@ vim.keymap.set("o", "å", "[", { remap = true })
 vim.keymap.set("o", "¨", "]", { remap = true })
 vim.keymap.set("x", "å", "[", { remap = true })
 vim.keymap.set("x", "¨", "]", { remap = true })
+
+-- Open iTerm2 vertical split in current project directory
+map("n", "<leader>tv", function()
+  local cwd = vim.fn.getcwd()
+  vim.fn.system("ttab -v -i -d " .. cwd)
+end, { desc = "iTerm2 vertical split (cwd)" })
+
+map("n", "<leader>th", function()
+  local cwd = vim.fn.getcwd()
+  vim.fn.system("ttab -h -i -d " .. cwd)
+end, { desc = "iTerm2 horizontal split (cwd)" })
+
+map("n", "<leader>av", function()
+  local cwd = vim.fn.getcwd()
+  vim.fn.system("ttab -v -i -d " .. cwd .. " opencode .")
+end, { desc = "Open Opencode in split tab (cwd)" })
