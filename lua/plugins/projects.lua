@@ -136,8 +136,17 @@ return {
               actions.select_default:replace(function()
                 local selection = action_state.get_selected_entry()
                 actions.close(prompt_bufnr)
+                -- Change directory to the project folder
                 vim.cmd("cd " .. selection.value)
-                vim.cmd("edit " .. selection.value)
+
+                -- Open README if possible
+                local readme = vim.fn.findfile("README.md")
+                if readme ~= "" then
+                  vim.cmd("edit " .. readme)
+                end
+
+                -- Open Snacks explorer
+                Snacks.explorer.open()
               end)
               return true
             end,
