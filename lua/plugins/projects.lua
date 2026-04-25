@@ -37,6 +37,7 @@ return {
             .. dev_dir
             .. " -maxdepth 3 -type d -name '.git' 2>/dev/null;"
             .. "find ~/.config -maxdepth 3 -type d -name '.git' 2>/dev/null"
+            .. "find /etc/nixos -type d 2>/dev/null"
         )
         local projects = {}
 
@@ -75,6 +76,7 @@ return {
           ["autopay"] = "OrgAutopay",
           ["nationaltheatret"] = "OrgNationaltheatret",
           [".config"] = "OrgConfig",
+          ["etc"] = "OrgNixOS",
           default = "OrgDefault",
         }
 
@@ -113,6 +115,7 @@ return {
                   ["bekk"] = "\u{f491} Bekk",
                   ["nationaltheatret"] = "\u{eeb6} NT",
                   [".config"] = "\u{e615} Config",
+                  ["etc"] = "\u{f313} NixOS",
                   default = "\u{f128} UNKNOWN",
                 }
 
