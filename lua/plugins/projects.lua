@@ -39,7 +39,6 @@ return {
             .. "find ~/.config -maxdepth 3 -type d -name '.git' 2>/dev/null"
             .. "find /etc/nixos -type d 2>/dev/null"
         )
-        vim.print(handle)
         local projects = {}
 
         if handle then
