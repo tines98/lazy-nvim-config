@@ -15,36 +15,38 @@
 --     ]])
 --   end,
 -- })
-vim.api.nvim_create_autocmd({ "DirChanged", "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "DirChanged" }, {
   callback = function()
-    local project = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-    local file = vim.fn.expand("%:t")
-    vim.opt.titlestring = "[" .. project .. "]" .. file
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+    vim.opt.titlestring = " " .. project_name
     vim.opt.title = true
   end,
 })
 vim.api.nvim_create_autocmd("DirChanged", {
   pattern = "global",
   callback = function()
-    local color_file = vim.fn.findfile(".iterm-color", ".;")
-
-    if color_file == "" then
-      vim.print(vim.fn.system("kitten @ set-tab-color active_bg=NONE inactive_bg=NONE"))
+    local utils = require("config.utils")
+    local project = utils.getProject()
+    -- if project is nil then set colors to NONE
+    if not project then
+      vim.fn.system("kitten @ set-tab-color " .. "active_bg=NONE " .. "inactive_bg=NONE ")
       return
     end
 
-    local f = io.open(color_file, "r")
-    if not f then
-      return
-    end
+    -- Extract the color values
+    local active_bg = project.active_tab_color or "NONE"
+    local inactive_bg = project.inactive_tab_color or active_bg
 
-    local hex = f:read("*l"):gsub("^#", ""):gsub("%s+", "")
-    f:close()
+    -- Set the kitten values
+    vim.fn.system("kitten @ set-tab-color " .. "active_bg=" .. active_bg .. " inactive_bg=" .. inactive_bg)
+  end,
+})
 
-    if #hex ~= 6 then
-      return
-    end
+-- set title string on vim startup
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.opt.titlestring = " " .. "LazyVim"
 
-    vim.print(vim.fn.system("kitten @ set-tab-color active_bg=#" .. hex .. " inactive_bg=#" .. hex))
+    vim.opt.title = true
   end,
 })
