@@ -39,6 +39,7 @@ return {
             .. "find ~/.config -maxdepth 3 -type d -name '.git' 2>/dev/null"
             .. "find /etc/nixos -type d 2>/dev/null"
         )
+        vim.print(handle)
         local projects = {}
 
         if handle then
@@ -69,17 +70,6 @@ return {
           file:close()
         end
 
-        local org_colors = {
-          -- Add your actual org names here with colors
-          ["personal"] = "OrgPersonal",
-          ["bekk"] = "OrgBekk",
-          ["autopay"] = "OrgAutopay",
-          ["nationaltheatret"] = "OrgNationaltheatret",
-          [".config"] = "OrgConfig",
-          ["etc"] = "OrgNixOS",
-          default = "OrgDefault",
-        }
-
         local pickers = require("telescope.pickers")
         local finders = require("telescope.finders")
         local conf = require("telescope.config").values
@@ -101,25 +91,15 @@ return {
             finder = finders.new_table({
               results = projects,
               entry_maker = function(entry)
+                local utils = require("config.utils")
+
                 local parts = vim.split(entry, "/")
                 local org = parts[#parts - 1] or "unknown"
                 local repo = parts[#parts] or entry
 
-                local hl_group = org_colors[org] or org_colors.default
+                local hl_group = utils.org_colors[org] or utils.org_colors.default
 
-                -- Replace dashes with spaces
-
-                local org_mapper = {
-                  ["autopay"] = "\u{f1b9} Autopay",
-                  ["personal"] = "\u{f415} Personal",
-                  ["bekk"] = "\u{f491} Bekk",
-                  ["nationaltheatret"] = "\u{eeb6} NT",
-                  [".config"] = "\u{e615} Config",
-                  ["etc"] = "\u{f313} NixOS",
-                  default = "\u{f128} UNKNOWN",
-                }
-
-                local org_display = org_mapper[org] or org_mapper.default
+                local org_display = utils.org_mapper[org] or utils.org_mapper.default
 
                 return {
                   value = entry,
