@@ -19,20 +19,17 @@ vim.api.nvim_create_autocmd({ "DirChanged", "BufEnter" }, {
   callback = function()
     local project = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
     local file = vim.fn.expand("%:t")
-    vim.opt.titlestring = "<b>" .. project .. "</b> |" .. (file ~= "" and " • " .. file or "")
+    vim.opt.titlestring = "[" .. project .. "]" .. file
     vim.opt.title = true
   end,
 })
 vim.api.nvim_create_autocmd("DirChanged", {
   pattern = "global",
   callback = function()
-    -- Search upward from cwd for .iterm-color
     local color_file = vim.fn.findfile(".iterm-color", ".;")
 
     if color_file == "" then
-      -- Reset to default tab color
-      io.write("\x1b]6;1;bg;*;default\a")
-      io.flush()
+      vim.print(vim.fn.system("kitten @ set-tab-color active_bg=NONE inactive_bg=NONE"))
       return
     end
 
@@ -48,19 +45,6 @@ vim.api.nvim_create_autocmd("DirChanged", {
       return
     end
 
-    -- Convert hex to r/g/b components in 0-65535 range (iTerm2 uses 16-bit)
-    local r = tonumber(hex:sub(1, 2), 16)
-    local g = tonumber(hex:sub(3, 4), 16)
-    local b = tonumber(hex:sub(5, 6), 16)
-
-    -- Send iTerm2 proprietary escape sequence to set tab color
-    local seq = string.format(
-      "\x1b]6;1;bg;red;brightness;%d\a" .. "\x1b]6;1;bg;green;brightness;%d\a" .. "\x1b]6;1;bg;blue;brightness;%d\a",
-      r,
-      g,
-      b
-    )
-    io.write(seq)
-    io.flush()
+    vim.print(vim.fn.system("kitten @ set-tab-color active_bg=#" .. hex .. " inactive_bg=#" .. hex))
   end,
 })
