@@ -28,7 +28,7 @@ return {
             icon = "\u{f013} ",
             key = "c",
             desc = "Config",
-            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            action = ":cd ~/.config/nvim/ | e README.md | lua Snacks.explorer()",
           },
           { icon = "\u{f110d} ", key = "s", desc = "Restore Session", section = "session" },
           {
