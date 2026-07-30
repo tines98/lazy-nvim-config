@@ -14,6 +14,9 @@ vim.keymap.set("o", "æ", "]", { remap = true })
 vim.keymap.set("x", "å", "[", { remap = true })
 vim.keymap.set("x", "æ", "]", { remap = true })
 
+-- Visual mode pasting doesn't overwrite the default register
+vim.keymap.set("v", "p", '"_dP', { desc = "Paste without overwriting default register" })
+
 -- Open iTerm2 vertical split in current project directory
 map("n", "<leader>tv", function()
   local cwd = vim.fn.getcwd()
