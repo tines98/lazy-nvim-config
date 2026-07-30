@@ -132,6 +132,8 @@ return {
                 local readme = vim.fn.findfile("README.md")
                 if readme ~= "" then
                   vim.cmd("edit " .. readme)
+                else
+                  vim.cmd("ene")
                 end
 
                 -- Open Snacks explorer
