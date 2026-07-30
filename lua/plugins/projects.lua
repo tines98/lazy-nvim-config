@@ -1,7 +1,7 @@
 return {
   "ahmedkhalf/project.nvim",
   lazy = false,
-  dependencies = { "nvim-telescope/telescope.nvim" },
+  dependencies = { "nvim-telescope/telescope.nvim", lazy = true },
   config = function()
     require("project_nvim").setup({
       manual_mode = false,
@@ -20,7 +20,14 @@ return {
     vim.api.nvim_set_hl(0, "OrgConfig", { fg = "#54A23D" })
     vim.api.nvim_set_hl(0, "OrgDefault", { fg = "white" })
 
-    require("telescope").load_extension("projects")
+    -- Defer the telescope extension load until telescope is actually loaded
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "TelescopeLoaded", -- or hook this off VeryLazy if you don't have that event
+      once = true,
+      callback = function()
+        require("telescope").load_extension("projects")
+      end,
+    })
   end,
   keys = {
     {
