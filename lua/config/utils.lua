@@ -11,10 +11,8 @@ function M.getProject()
 end
 
 M.org_mapper = {
-  ["autopay"] = "\u{f1b9} Autopay",
   ["personal"] = "\u{f415} Personal",
   ["bekk"] = "\u{f491} Bekk",
-  ["nationaltheatret"] = "\u{eeb6} NT",
   [".config"] = "\u{e615} Config",
   ["etc"] = "\u{f313} NixOS",
   default = "\u{f128} UNKNOWN",
@@ -23,8 +21,6 @@ M.org_mapper = {
 M.org_colors = {
   ["personal"] = "OrgPersonal",
   ["bekk"] = "OrgBekk",
-  ["autopay"] = "OrgAutopay",
-  ["nationaltheatret"] = "OrgNationaltheatret",
   [".config"] = "OrgConfig",
   ["etc"] = "OrgNixOS",
   default = "OrgDefault",
